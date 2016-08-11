@@ -14,7 +14,10 @@ Template.uiGenerateSDKModal.events({
         var selectedLanguage = template.find("[name=selectLanguageDropdown]").selectedOptions[0].value;
 
         //Read path to file
-        var pathToFile = template.find("[name=linkToDocumantation]").value;
+        var pathToFile = template.find("[name=linkToDocumentation]").value;
+        if (!pathToFile) {
+            template.find("#link-to-documentation").setAttribute("class", "has-error");
+        }
 
         //Create URL to send request
         var url = "https://generator.swagger.io/api/gen/clients/" + selectedLanguage.toLowerCase();
@@ -25,9 +28,13 @@ Template.uiGenerateSDKModal.events({
         };
         
         // POST request
-        HTTP.post(url, { data: options }, function(err, result) { 
-            var response = JSON.parse(result.content); 
-            window.location.href = response.link; 
+        HTTP.post(url, { data: options }, function(error, result) { 
+            if (error) {
+                console.log(error);
+            } else {
+                var response = JSON.parse(result.content); 
+                window.location.href = response.link;
+            } 
         });
     }    
 });

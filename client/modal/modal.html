@@ -3,7 +3,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Generate SDK from YAML file</h4>
+        <h4 class="modal-title">Generate SDK from JSON file</h4>
       </div>
       <div class="modal-body">
         <legend>
@@ -20,7 +20,11 @@
         <legend>
           <p>Add link to your documentation</p>
         </legend>
-          <input class="form-control" type="text" name="linkToDocumantation" placeholder="Link to documantation">
+          <div id="link-to-documentation">
+            <input class="form-control" type="text" name="linkToDocumentation" placeholder="Link to documentation">
+            <span class="help-block">Value is empty</span>
+          </div>
+          
         
       </div>
       <div class="modal-footer">
