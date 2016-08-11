@@ -1,0 +1,33 @@
+<template name="uiGenerateSDKModal">
+    <div class="modal fade">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Generate SDK from YAML file</h4>
+      </div>
+      <div class="modal-body">
+        <legend>
+          <p>Select language</p>
+        </legend>
+          <div class="select-language">    
+            <select class="form-control" name="selectLanguageDropdown">
+            {{#each lang in languages}}
+            <option>{{lang}}</option>
+            {{ / each}}
+            </select>
+          </div>
+
+        <legend>
+          <p>Add link to your documentation</p>
+        </legend>
+          <input class="form-control" type="text" name="linkToDocumantation" placeholder="Link to documantation">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="download">Download</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</template>
