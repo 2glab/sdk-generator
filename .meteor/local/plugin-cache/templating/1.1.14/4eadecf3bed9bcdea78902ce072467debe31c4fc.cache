@@ -1,0 +1,1 @@
+{"head":"<title>ui-sdk-generator</title>","body":"","js":"\nTemplate.body.addContent((function() {\n  var view = this;\n  return HTML.Raw('<div class=\"container\">\\n   <h1>Welcome to board</h1>\\n  <button class=\"btn btn-defaut\" id=\"sdk-generate\"> SDK Generator</button>\\n </div>');\n}));\nMeteor.startup(Template.body.renderToDocument);\n","bodyAttrs":{}}
