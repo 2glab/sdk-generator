@@ -22,3 +22,5 @@ insecure@1.0.7                # Allow all DB writes from clients (for prototypin
 peppelg:bootstrap-3-modal
 twbs:bootstrap
 http
+aldeed:simple-schema
+aldeed:autoform

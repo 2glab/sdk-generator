@@ -1,14 +1,14 @@
 <template name="uiGenerateSDKModal">
-    <div class="modal fade">
+<div class="modal fade">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Generate SDK from JSON file</h4>
       </div>
       <div class="modal-body">
-        <legend>
-          <p>Select language</p>
-        </legend>
+        {{#autoForm schema=linkValid id="DownloadSDKFile"}}
+        
+        <label>Select language</label>
           <div class="select-language">    
             <select class="form-control" name="selectLanguageDropdown">
             {{#each lang in languages}}
@@ -16,16 +16,11 @@
             {{ / each}}
             </select>
           </div>
-
-        <legend>
-          <p>Add link to your documentation</p>
-        </legend>
-          <div id="link-to-documentation">
-            <input class="form-control" type="text" name="linkToDocumentation" placeholder="Link to documentation">
-            <span class="help-block">Value is empty</span>
-          </div>
           
-        
+          <!--<div id="link-to-documentation">-->
+            {{> afQuickField name="LinkToDocumentation" id="link-to-documentation"}}
+            {{/autoForm}}
+          <!--</div>-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
