@@ -17,10 +17,11 @@
             </select>
           </div>
           
-          <!--<div id="link-to-documentation">-->
+          <div id="block-with-link">
             {{> afQuickField name="LinkToDocumentation" id="link-to-documentation"}}
-            {{/autoForm}}
-          <!--</div>-->
+          </div>
+          {{/autoForm}}
+          {{> flashMessages}}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

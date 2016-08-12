@@ -39,16 +39,19 @@ Template.uiGenerateSDKModal.events({
             HTTP.post(url, { data: options }, function(error, result) { 
                 if (error) {
                     console.log(error);
+                    FlashMessages.sendError("Your document is incorrect. Please, try another.");
                 } else {
                     var response = JSON.parse(result.content); 
                     window.location.href = response.link;
                 } 
             });
+        } else {
+            //Or add class Error
+            template.find("#block-with-link").setAttribute("class", "has-error");
         }
-        // else {
-        //     //then class Error
-        //     var div = template.find("#link-to-documentation").setAttribute("class", "form-control has-error");
-        // }
-        
-    }    
+    },
+    //After error message change focus to input again
+    'focus #link-to-documentation': function() {
+        template.find("#block-with-link").setAttribute("class", "");
+    }  
 });
