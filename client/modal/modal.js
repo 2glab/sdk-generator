@@ -2,56 +2,62 @@ import { HTTP } from 'meteor/http'
 import { Template } from 'meteor/templating'
 
 Template.uiGenerateSDKModal.helpers({
+    //List of popular languages
     'languages' () {
         return languageList;
-    }, 
-    'linkValid' () {
-        schema = new SimpleSchema({
-        LinkToDocumentation: {
-            type: String,
-            optional: false
-        }
-    });
-        return schema;
+    },
+    //Schema for modal form 
+    'generateSDK' () {
+        var sdkSchema = new SimpleSchema({
+            selectLanguage: {
+                type: String,
+                allowedValues: languageList,
+                autoform: {
+                    afFieldInput: {
+                        firstOption: "(Language)"
+                    }
+                }
+            }, 
+            linkToDocumentation: {
+                type: String,
+                label: "Link to documentation"
+            }
+        });
+        return sdkSchema;
     }
 });
 
-Template.uiGenerateSDKModal.events({
-    // Create POST request to swagger
-    'click #download': function(event, template) {
-        //Read selected language
-        var selectedLanguage = template.find("[name=selectLanguageDropdown]").selectedOptions[0].value;
-
-        //Read path to file
-        var pathToFile = template.find("[name=LinkToDocumentation]").value;
-
+AutoForm.addHooks('downloadSDK', {
+    onSubmit: function (formValues) {
+        event.preventDefault();
+        
         //Create URL to send request
-        var url = "https://generator.swagger.io/api/gen/clients/" + selectedLanguage.toLowerCase();
+        let url = "https://generator.swagger.io/api/gen/clients/" + formValues.selectLanguage.toLowerCase();
         
-        //Create post options
-        var options = {
-            "swaggerUrl": pathToFile
+        //Create POST options
+        let options = {
+            "swaggerUrl": formValues.linkToDocumentation
         };
-        
-        //Check empty value  
-        if (pathToFile) {
-            // POST request
-            HTTP.post(url, { data: options }, function(error, result) { 
-                if (error) {
-                    console.log(error);
-                    FlashMessages.sendError("Your document is incorrect. Please, try another.");
-                } else {
-                    var response = JSON.parse(result.content); 
-                    window.location.href = response.link;
+
+        // Create POST request
+        HTTP.post(url, { data: options }, function(error, result) { 
+            var response = JSON.parse(result.content);
+            if (result.statusCode === 200) {
+                // var response = JSON.parse(result.content);
+                $('.modal').modal('hide');
+                window.location.href = response.link;
+            } else {
+                FlashMessages.sendError(response.message);
+                $('button').removeAttr('disabled');
                 } 
-            });
-        } else {
-            //Or add class Error
-            template.find("#block-with-link").setAttribute("class", "has-error");
-        }
-    },
-    //After error message change focus to input again
-    'focus #link-to-documentation': function() {
-        template.find("#block-with-link").setAttribute("class", "");
-    }  
+            }
+        );
+    }
+});
+
+FlashMessages.configure({
+  // Configuration for FlashMessages.
+  autoHide: true,
+  hideDelay: 5000,
+  autoScroll: false
 });

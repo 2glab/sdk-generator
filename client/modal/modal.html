@@ -1,33 +1,21 @@
 <template name="uiGenerateSDKModal">
-<div class="modal fade">
+<div class="modal fade" id="globalModalForm">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         <h4 class="modal-title">Generate SDK from JSON file</h4>
       </div>
       <div class="modal-body">
-        {{#autoForm schema=linkValid id="DownloadSDKFile"}}
-        
-        <label>Select language</label>
-          <div class="select-language">    
-            <select class="form-control" name="selectLanguageDropdown">
-            {{#each lang in languages}}
-            <option>{{lang}}</option>
-            {{ / each}}
-            </select>
-          </div>
-          
-          <div id="block-with-link">
-            {{> afQuickField name="LinkToDocumentation" id="link-to-documentation"}}
-          </div>
-          {{/autoForm}}
-          {{> flashMessages}}
+        {{> quickForm 
+          id="downloadSDK"
+          schema=generateSDK
+          buttonContent="Download"}}
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" id="download">Download</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+      {{> flashMessages}}
+    </div>
+  </div>
+</div>
 </template>
