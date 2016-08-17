@@ -29,17 +29,18 @@ Template.uiGenerateSDKModal.helpers({
 
 AutoForm.addHooks('downloadSDK', {
   onSubmit: function (formValues) {
-    event.preventDefault();
+    // Prevent form from submitting
+    this.event.preventDefault();
 
-        // Create URL to send request
+    // Create URL to send request
     let url = 'https://generator.swagger.io/api/gen/clients/' + formValues.selectLanguage.toLowerCase();
 
-        // Create POST options
+    // Create POST options
     let options = {
       'swaggerUrl': formValues.linkToDocumentation
     };
 
-        // Create POST request
+    // Create POST request
     HTTP.post(url, { data: options }, function (error, result) {
       var response = JSON.parse(result.content);
       if (result.statusCode === 200) {
@@ -50,8 +51,7 @@ AutoForm.addHooks('downloadSDK', {
         FlashMessages.sendError(response.message);
         $('button').removeAttr('disabled');
       }
-    }
-        );
+    });
   }
 });
 
