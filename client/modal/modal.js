@@ -19,8 +19,7 @@ Template.uiGenerateSDKModal.helpers({
         }
       },
       linkToDocumentation: {
-        type: String,
-        label: 'Link to documentation'
+        type: String
       }
     });
     return sdkSchema;
@@ -40,16 +39,21 @@ AutoForm.addHooks('downloadSDK', {
       'swaggerUrl': formValues.linkToDocumentation
     };
 
-    // Create POST request
+    // Create and send POST request
     HTTP.post(url, { data: options }, function (error, result) {
+      // Get information from Swagger API response
       var response = JSON.parse(result.content);
+
       if (result.statusCode === 200) {
-                // var response = JSON.parse(result.content);
         $('.modal').modal('hide');
+        
+        // Go to link and download file
         window.location.href = response.link;
       } else {
-        FlashMessages.sendError(response.message);
         $('button').removeAttr('disabled');
+
+        // Otherwise show an error message
+        FlashMessages.sendError(response.message);
       }
     });
   }
